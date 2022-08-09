@@ -23,7 +23,13 @@ class HomeViewModel(
     private val _page: MutableLiveData<Page?> = MutableLiveData()
     val page: LiveData<Page?> = _page
 
-    fun getPage() = viewModelScope.launch {
+    init {
+        viewModelScope.launch {
+            getPage()
+        }
+    }
+
+   private fun getPage() = viewModelScope.launch {
         withContext(Dispatchers.IO) {
             repository.getPage()
         }.read({
@@ -33,5 +39,7 @@ class HomeViewModel(
         })
     }
 
-    override fun onReceiveResponseCode(code: Int, data: Any?) {}
+    override fun onReceiveResponse(code: Int, data: Any?) {
+        Log.d("", "OnReceiveResponse viewModel - code: $code ==> data: $data")
+    }
 }

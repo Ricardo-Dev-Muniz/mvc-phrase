@@ -3,9 +3,12 @@ package com.app.co.core.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.app.co.core.R
 import com.app.co.core.data.Page
 import com.app.co.core.databinding.ItemAdapterBinding
+import com.app.co.core.support_ext.setColouredSpan
 
 class ViewPagerAdapter(
     private val context: Context,
@@ -33,7 +36,12 @@ class ViewPagerAdapter(
         private val binding: ItemAdapterBinding,
         private val context: Context,
     ) : RecyclerView.ViewHolder(binding.root) {
+        val color by lazy { ContextCompat.getColor(context, R.color.pink) }
+
         fun bind(data: Page) {
+            binding.textView .setColouredSpan(
+                binding.textView.text.toString(), 0, 5, color
+            )
             binding.tvCitation.text = data.citation
         }
     }
