@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MVC</string>
+    <string name="lbl_title">Frase do dia</string>
+    <string name="lbl_subtitle">A amizade desenvolve a felicidade e reduz o sofrimento, duplicando a nossa alegria e dividindo a nossa dor.</string>
+    <string name="lbl_share">Compartilhar</string>
+</resources>
