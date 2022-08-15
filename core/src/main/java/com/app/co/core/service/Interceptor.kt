@@ -8,11 +8,11 @@ object Interceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
-        onResponseListener?.onReceiveResponseCode(response.code, response.body)
+        onResponseListener?.onReceiveResponse(response.code, response.body)
         return response
     }
 
     interface OnResponseListener {
-        fun onReceiveResponseCode(code: Int, data: Any?)
+        fun onReceiveResponse(code: Int, data: Any?)
     }
 }
