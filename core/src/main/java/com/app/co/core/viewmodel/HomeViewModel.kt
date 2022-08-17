@@ -29,8 +29,8 @@ class HomeViewModel(
         }
     }
 
-   private fun getPage() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
+    private fun getPage() = viewModelScope.launch {
+       withContext(Dispatchers.IO) {
             repository.getPage()
         }.read({
             _page.value = it
@@ -38,6 +38,10 @@ class HomeViewModel(
             Log.e("", "Error viewModel - ${it.message}")
         })
     }
+
+    /** future random list type phrases */
+    private fun <E> List<E>.doRandom(random: java.util.Random): E? =
+        if (size > 0) get(random.nextInt(size)) else null
 
     override fun onReceiveResponse(code: Int, data: Any?) {
         Log.d("", "OnReceiveResponse viewModel - code: $code ==> data: $data")

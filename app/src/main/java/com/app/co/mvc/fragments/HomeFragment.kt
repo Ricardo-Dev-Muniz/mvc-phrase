@@ -13,7 +13,6 @@ import com.app.co.core.module.App
 import com.app.co.core.module.Utilities
 import com.app.co.core.viewmodel.HomeViewModel
 import com.app.co.mvc.databinding.FragmentHomeBinding
-import com.app.co.mvc.fragment_ext.destroy
 import com.app.co.mvc.fragment_ext.share
 import com.app.co.mvc.interfaces.AdapterCallbacks
 import com.google.android.material.tabs.TabLayoutMediator
@@ -72,6 +71,5 @@ class HomeFragment : Fragment(), AdapterCallbacks {
 
     override fun onDestroy() {
         super.onDestroy()
-        destroy(_binding)
     }
 }

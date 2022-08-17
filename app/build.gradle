@@ -74,6 +74,8 @@ dependencies {
     testImplementation "org.koin:koin-test:$koin_version"
 
     def coroutines_version = '1.6.21'
+    def coroutines_bom = '1.6.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-bom:$coroutines_bom"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
 }
