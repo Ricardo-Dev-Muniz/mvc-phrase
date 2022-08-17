@@ -28,7 +28,7 @@ object App {
     private val service = module {
         single {
             ServiceGen(
-                url = "http://localhost:5001/crawler-apiv1/us-central1/app/", headers = listOf(
+                url = "http://10.0.2.2:5001/crawler-apiv1/us-central1/app/", headers = listOf(
                     Pair("Content-Type", "application/json"),
                     Pair("Accept", "application/json"),
                     Pair("Connection", "close")
