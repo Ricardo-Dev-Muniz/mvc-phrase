@@ -20,8 +20,8 @@ class HomeViewModel(
 ) : AndroidViewModel(application),
     Interceptor.OnResponseListener {
 
-    private val _page: MutableLiveData<Page?> = MutableLiveData()
-    val page: LiveData<Page?> = _page
+    private val _page: MutableLiveData<List<Page?>> = MutableLiveData()
+    val page: LiveData<List<Page?>> = _page
 
     init {
         viewModelScope.launch {
@@ -33,8 +33,10 @@ class HomeViewModel(
        withContext(Dispatchers.IO) {
             repository.getPage()
         }.read({
-            _page.value = it
-        }, {
+           Log.e("result_vm", "viewModel - ${it.toList()}")
+           _page.value = it
+            Log.e("result_vm", "viewModel - $it")
+       }, {
             Log.e("", "Error viewModel - ${it.message}")
         })
     }

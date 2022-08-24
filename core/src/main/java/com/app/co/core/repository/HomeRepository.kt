@@ -4,6 +4,5 @@ import com.app.co.core.data.Page
 import com.app.co.core.response_ext.ResponseAny
 
 interface HomeRepository {
-    suspend fun getPage(): ResponseAny<Page?>
-    suspend fun log(): ResponseAny<Any>
+    suspend fun getPage(): ResponseAny<List<Page?>>
 }
