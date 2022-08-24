@@ -1,7 +1,6 @@
 package com.app.co.mvc.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.app.co.core.adapter.ViewPagerAdapter
 import com.app.co.core.data.Page
 import com.app.co.core.module.App
-import com.app.co.core.module.Utilities
+import com.app.co.core.module.Utils
 import com.app.co.core.viewmodel.HomeViewModel
 import com.app.co.mvc.databinding.FragmentHomeBinding
 import com.app.co.mvc.fragment_ext.share
@@ -20,15 +19,15 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment(), AdapterCallbacks {
 
-    private val injectModules by lazy { Utilities.loadModules(App.modules()) }
-    private fun injectModules() = injectModules
+    private val modules by lazy { Utils.loadModules(App.modules()) }
+    private fun insertModules() = modules
     private val viewModel: HomeViewModel by sharedViewModel()
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        injectModules()
+        insertModules()
         super.onCreate(savedInstanceState)
     }
 
@@ -45,7 +44,7 @@ class HomeFragment : Fragment(), AdapterCallbacks {
 
     private fun observer() {
         viewModel.page.observe(viewLifecycleOwner) {
-           updatePage(mutableListOf(it))
+            updatePage(it)
         }
     }
 
@@ -53,17 +52,20 @@ class HomeFragment : Fragment(), AdapterCallbacks {
         binding.btnShare.setOnClickListener {
             share(requireContext(), "")
         }
+
+        binding.btnNext.setOnClickListener {
+            binding.viewPager.setCurrentItem(2, true)
+        }
     }
 
-    override fun updatePage(mutableList: MutableList<Page?>) {
+    override fun updatePage(mutableList: List<Page?>) {
         binding.viewPager.adapter =
-            ViewPagerAdapter(requireContext(), mutableList)
-        TabLayoutMediator(binding.dots, binding.viewPager) { _, _ ->
-        }.attach()
+            ViewPagerAdapter(requireContext(), mutableList.toMutableList())
+        TabLayoutMediator(binding.dots, binding.viewPager) { _, _ -> }.attach()
 
-        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                Log.d("home_fragment", "Adapter position $position")
                 super.onPageSelected(position)
             }
         })
@@ -71,5 +73,6 @@ class HomeFragment : Fragment(), AdapterCallbacks {
 
     override fun onDestroy() {
         super.onDestroy()
+        _binding = null
     }
 }

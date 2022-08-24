@@ -2,7 +2,7 @@ package com.app.co.core.app
 
 import android.app.Application
 import com.app.co.core.module.App
-import com.app.co.core.module.Utilities
+import com.app.co.core.module.Utils
 import org.koin.core.context.loadKoinModules
 
 class MainApplication : Application() {
@@ -13,7 +13,7 @@ class MainApplication : Application() {
     }
 
     private fun koin() {
-        Utilities.loadKoin(applicationContext)
+        Utils.loadKoin(applicationContext)
         loadKoinModules(App.modules())
     }
 }

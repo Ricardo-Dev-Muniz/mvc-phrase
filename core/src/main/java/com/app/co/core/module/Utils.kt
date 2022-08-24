@@ -7,7 +7,7 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 
-object Utilities {
+object Utils {
     fun loadModules(modules: List<Module>) {
         loadKoinModules(modules)
     }
