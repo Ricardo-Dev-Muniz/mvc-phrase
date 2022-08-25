@@ -12,7 +12,6 @@ import com.app.co.core.module.App
 import com.app.co.core.module.Utils
 import com.app.co.core.viewmodel.HomeViewModel
 import com.app.co.mvc.databinding.FragmentHomeBinding
-import com.app.co.mvc.fragment_ext.share
 import com.app.co.mvc.interfaces.AdapterCallbacks
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -25,6 +24,7 @@ class HomeFragment : Fragment(), AdapterCallbacks {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private var adapter: ViewPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         insertModules()
@@ -49,18 +49,14 @@ class HomeFragment : Fragment(), AdapterCallbacks {
     }
 
     private fun click() {
-        binding.btnShare.setOnClickListener {
-            share(requireContext(), "")
-        }
-
         binding.btnNext.setOnClickListener {
             binding.viewPager.setCurrentItem(2, true)
         }
     }
 
     override fun updatePage(mutableList: List<Page?>) {
-        binding.viewPager.adapter =
-            ViewPagerAdapter(requireContext(), mutableList.toMutableList())
+        adapter = ViewPagerAdapter(requireContext(), mutableList.toMutableList())
+        binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.dots, binding.viewPager) { _, _ -> }.attach()
 
         binding.viewPager.registerOnPageChangeCallback(object :

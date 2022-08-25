@@ -33,9 +33,7 @@ class HomeViewModel(
        withContext(Dispatchers.IO) {
             repository.getPage()
         }.read({
-           Log.e("result_vm", "viewModel - ${it.toList()}")
            _page.value = it
-            Log.e("result_vm", "viewModel - $it")
        }, {
             Log.e("", "Error viewModel - ${it.message}")
         })
