@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.co.core.R
 import com.app.co.core.data.Page
 import com.app.co.core.databinding.ItemAdapterBinding
+import com.app.co.core.interfaces.SafeClick
 import com.app.co.core.support_ext.launchImage
 import com.app.co.core.support_ext.setColouredSpan
 
@@ -17,6 +18,12 @@ class ViewPagerAdapter(
     private val mutable: MutableList<Page?>,
 ) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
+    private var onClick: SafeClick? = null
+
+    fun onClick(click: SafeClick) {
+        onClick = click
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -24,7 +31,7 @@ class ViewPagerAdapter(
         val itemBinding = ItemAdapterBinding.inflate(
             LayoutInflater.from(context), parent, false
         )
-        return ViewHolder(itemBinding, context)
+        return ViewHolder(itemBinding, context, onClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -37,7 +44,9 @@ class ViewPagerAdapter(
     class ViewHolder(
         private val binding: ItemAdapterBinding,
         private val context: Context,
+        private val onClick: SafeClick?,
     ) : RecyclerView.ViewHolder(binding.root) {
+
         private val color by lazy {
             ContextCompat.getColor(context, R.color.pink)
         }
