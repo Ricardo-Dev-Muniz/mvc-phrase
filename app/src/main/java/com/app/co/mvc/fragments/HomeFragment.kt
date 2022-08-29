@@ -10,8 +10,10 @@ import com.app.co.core.adapter.ViewPagerAdapter
 import com.app.co.core.data.Page
 import com.app.co.core.module.App
 import com.app.co.core.module.Utils
+import com.app.co.core.support_ext.share
 import com.app.co.core.viewmodel.HomeViewModel
 import com.app.co.mvc.databinding.FragmentHomeBinding
+import com.app.co.mvc.fragment_ext.destroy
 import com.app.co.mvc.interfaces.AdapterCallbacks
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -49,6 +51,11 @@ class HomeFragment : Fragment(), AdapterCallbacks {
     }
 
     private fun click() {
+        binding.btnShare.setOnClickListener {
+            val page = viewModel.getPageItem(viewModel.position.value!!)
+            share(requireContext(), page.citation!!)
+        }
+
         binding.btnNext.setOnClickListener {
             binding.viewPager.setCurrentItem(2, true)
         }
@@ -62,6 +69,7 @@ class HomeFragment : Fragment(), AdapterCallbacks {
         binding.viewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
+                viewModel.setPosition(position)
                 super.onPageSelected(position)
             }
         })
@@ -70,5 +78,6 @@ class HomeFragment : Fragment(), AdapterCallbacks {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        destroy()
     }
 }

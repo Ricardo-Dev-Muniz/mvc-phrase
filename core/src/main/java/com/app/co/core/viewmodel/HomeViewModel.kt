@@ -23,6 +23,9 @@ class HomeViewModel(
     private val _page: MutableLiveData<List<Page?>> = MutableLiveData()
     val page: LiveData<List<Page?>> = _page
 
+    private val _position: MutableLiveData<Int> = MutableLiveData()
+    val position: LiveData<Int> = _position
+
     init {
         viewModelScope.launch {
             getPage()
@@ -35,15 +38,19 @@ class HomeViewModel(
         }.read({
            _page.value = it
        }, {
-            Log.e("", "Error viewModel - ${it.message}")
+            Log.e("home_view_model", "Error viewModel - ${it.message}")
         })
     }
 
-    /** future random list type phrases */
-    private fun <E> List<E>.doRandom(random: java.util.Random): E? =
-        if (size > 0) get(random.nextInt(size)) else null
+    fun setPosition(position: Int) {
+        _position.value = position
+    }
+    fun getPageItem(position: Int): Page {
+        return _page.value!![position]!!
+    }
 
     override fun onReceiveResponse(code: Int, data: Any?) {
-        Log.d("", "OnReceiveResponse viewModel - code: $code ==> data: $data")
+        Log.d("home_view_model",
+            "OnReceiveResponse viewModel - code: $code ==> data: $data")
     }
 }

@@ -76,7 +76,7 @@ fun Any?.launchImage(
 fun Any.share(
     context: Context,
     description: String,
-    bitmap: Bitmap,
+    bitmap: Bitmap? = null,
 ) {
     this.toString()
     val share = Intent(Intent.ACTION_SEND)
@@ -94,7 +94,7 @@ fun Any.share(
 
     try {
         val stream = context.contentResolver.openOutputStream(uri)!!
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         stream.close()
     } catch (e: Exception) {
         System.err.println(e.toString())
