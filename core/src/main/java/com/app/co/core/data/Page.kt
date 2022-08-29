@@ -5,5 +5,5 @@ import android.graphics.Bitmap
 data class Page(
     val citation: String? = null,
     val image: String? = null,
-    val bitmap: Bitmap
-    )
+    val bitmap: Bitmap? = null,
+)

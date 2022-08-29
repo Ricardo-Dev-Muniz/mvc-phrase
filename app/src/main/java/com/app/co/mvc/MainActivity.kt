@@ -3,10 +3,12 @@ package com.app.co.mvc
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.app.co.mvc.activity_ext.finalize
+import com.app.co.mvc.activity_ext.screenFit
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        screenFit()
         setContentView(R.layout.activity_main)
     }
 
