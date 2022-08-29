@@ -7,5 +7,8 @@ fun Activity.finalize() = finish()
 
 fun Activity.screenFit() {
     window.clearFlags(0)
-    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS and WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    window.clearFlags(
+        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                and WindowManager.LayoutParams.FLAG_FULLSCREEN
+    )
 }

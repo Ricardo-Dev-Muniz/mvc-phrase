@@ -46,7 +46,7 @@ class HomeFragment : Fragment(), AdapterCallbacks {
 
     private fun observer() {
         viewModel.page.observe(viewLifecycleOwner) {
-            updatePage(it)
+            adapter(it)
         }
     }
 
@@ -61,7 +61,7 @@ class HomeFragment : Fragment(), AdapterCallbacks {
         }
     }
 
-    override fun updatePage(mutableList: List<Page?>) {
+    override fun adapter(mutableList: List<Page?>) {
         adapter = ViewPagerAdapter(requireContext(), mutableList.toMutableList())
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.dots, binding.viewPager) { _, _ -> }.attach()

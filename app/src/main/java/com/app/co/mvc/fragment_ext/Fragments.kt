@@ -10,5 +10,4 @@ fun Fragment.destroy() = run {
             onDestroy()
         }
     })
-
 }
