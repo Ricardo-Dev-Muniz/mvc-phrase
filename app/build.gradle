@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -77,5 +78,8 @@ dependencies {
     def coroutines_bom = '1.6.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-bom:$coroutines_bom"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+
+    def ads = '21.0.0'
+    implementation "com.google.android.gms:play-services-ads:$ads"
 
 }

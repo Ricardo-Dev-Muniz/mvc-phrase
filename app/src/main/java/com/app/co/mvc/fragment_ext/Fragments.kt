@@ -4,7 +4,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 
 fun Fragment.destroy() = run {
-    requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+    requireActivity().onBackPressedDispatcher.addCallback(
+        object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             handleOnBackPressed()
             onDestroy()

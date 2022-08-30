@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MVC</string>
+    <string name="app_name">Frases do dia</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lbl_title">Frase do dia</string>

@@ -10,6 +10,9 @@ import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
@@ -56,7 +59,9 @@ fun Any?.launchImage(
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .apply(
                     RequestOptions().format(
-                    DecodeFormat.PREFER_ARGB_8888))
+                        DecodeFormat.PREFER_ARGB_8888
+                    )
+                )
                 .into(object : CustomTarget<Bitmap?>(size, size) {
                     override fun onResourceReady(
                         resource: Bitmap,
@@ -103,4 +108,18 @@ fun Any.share(
     share.putExtra(Intent.EXTRA_TEXT, description)
     share.putExtra(Intent.EXTRA_STREAM, uri)
     context.startActivity(Intent.createChooser(share, "Compartilhar evento"))
+}
+
+suspend fun Any?.networkCall(
+    progress: ProgressBar,
+    context: Context,
+) = GlobalScope.launch {
+    withContext(Dispatchers.Default) {
+        for (i in 1..2000) {
+            Log.v("network call - ", "$i")
+        }
+        (context as Activity).runOnUiThread {
+            progress.visibility = View.INVISIBLE
+        }
+    }
 }

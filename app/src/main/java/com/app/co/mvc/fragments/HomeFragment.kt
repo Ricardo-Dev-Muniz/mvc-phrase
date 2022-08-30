@@ -15,6 +15,12 @@ import com.app.co.core.viewmodel.HomeViewModel
 import com.app.co.mvc.databinding.FragmentHomeBinding
 import com.app.co.mvc.fragment_ext.destroy
 import com.app.co.mvc.interfaces.AdapterCallbacks
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -27,6 +33,8 @@ class HomeFragment : Fragment(), AdapterCallbacks {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var adapter: ViewPagerAdapter? = null
+
+    private var mInterstitialAd: InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         insertModules()
@@ -41,6 +49,7 @@ class HomeFragment : Fragment(), AdapterCallbacks {
             .apply { lifecycleOwner = viewLifecycleOwner }
         observer()
         click()
+        inter()
         return binding.root
     }
 
@@ -52,8 +61,14 @@ class HomeFragment : Fragment(), AdapterCallbacks {
 
     private fun click() {
         binding.btnShare.setOnClickListener {
-            val page = viewModel.getPageItem(viewModel.position.value!!)
-            share(requireContext(), page.citation!!)
+            binding.progress.visibility = View.VISIBLE
+            binding.tvShare.visibility = View.GONE
+
+            binding.progress.animate().alpha(0f).setDuration(3500).withEndAction {
+                binding.progress.visibility = View.GONE
+                binding.tvShare.visibility = View.VISIBLE
+                showInter()
+            }
         }
 
         binding.btnNext.setOnClickListener {
@@ -73,6 +88,44 @@ class HomeFragment : Fragment(), AdapterCallbacks {
                 super.onPageSelected(position)
             }
         })
+    }
+
+    private fun inter(){
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(requireContext(),"ca-app-pub-3940256099942544/1033173712", adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    mInterstitialAd = null
+                }
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    mInterstitialAd = interstitialAd
+                }
+            })
+    }
+
+    private fun showInter(){
+        if (mInterstitialAd != null){
+            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback(){
+                override fun onAdClicked() {
+                    super.onAdClicked()
+                }
+                override fun onAdDismissedFullScreenContent() {
+                    val page = viewModel.getPageItem(viewModel.position.value!!)
+                    share(requireContext(), page.citation!!)
+                    super.onAdDismissedFullScreenContent()
+                }
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    super.onAdFailedToShowFullScreenContent(p0)
+                }
+                override fun onAdImpression() {
+                    super.onAdImpression()
+                }
+                override fun onAdShowedFullScreenContent() {
+                    super.onAdShowedFullScreenContent()
+                }
+            }
+            mInterstitialAd?.show(requireActivity())
+        }
     }
 
     override fun onDestroy() {

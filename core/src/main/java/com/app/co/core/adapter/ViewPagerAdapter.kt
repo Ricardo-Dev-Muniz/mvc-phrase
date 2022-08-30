@@ -17,6 +17,10 @@ class ViewPagerAdapter(
     private val mutable: MutableList<Page?>,
 ) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
+    fun getBitmap() {
+
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
