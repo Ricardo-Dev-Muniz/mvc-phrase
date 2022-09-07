@@ -15,7 +15,6 @@ import com.app.co.core.viewmodel.HomeViewModel
 import com.app.co.mvc.databinding.FragmentHomeBinding
 import com.app.co.mvc.fragment_ext.destroy
 import com.app.co.mvc.interfaces.AdapterCallbacks
-import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
@@ -61,14 +60,18 @@ class HomeFragment : Fragment(), AdapterCallbacks {
 
     private fun click() {
         binding.btnShare.setOnClickListener {
-            binding.progress.visibility = View.VISIBLE
             binding.tvShare.visibility = View.GONE
+            binding.progress.visibility = View.VISIBLE
 
-            binding.progress.animate().alpha(0f).setDuration(3500).withEndAction {
-                binding.progress.visibility = View.GONE
-                binding.tvShare.visibility = View.VISIBLE
-                showInter()
-            }
+            binding.progress.animate().alpha(0f)
+                .setDuration(3500).withEndAction {
+                    binding.progress.visibility = View.GONE
+                    binding.progress.alpha = 1F
+                    binding.tvShare.visibility = View.VISIBLE
+                    val page = viewModel.getPageItem(viewModel.position.value!!)
+                    share(requireContext(), page.citation!!)
+                    showInter()
+                }
         }
 
         binding.btnNext.setOnClickListener {
@@ -90,40 +93,24 @@ class HomeFragment : Fragment(), AdapterCallbacks {
         })
     }
 
-    private fun inter(){
+    private fun inter() {
         val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(requireContext(),"ca-app-pub-3940256099942544/1033173712", adRequest,
-            object : InterstitialAdLoadCallback() {
+        InterstitialAd.load(requireContext(),
+            requireContext().getString(com.app.co.core.R.string.ads_inter),
+            adRequest, object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     mInterstitialAd = null
                 }
+
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
                     mInterstitialAd = interstitialAd
                 }
             })
     }
 
-    private fun showInter(){
-        if (mInterstitialAd != null){
-            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback(){
-                override fun onAdClicked() {
-                    super.onAdClicked()
-                }
-                override fun onAdDismissedFullScreenContent() {
-                    val page = viewModel.getPageItem(viewModel.position.value!!)
-                    share(requireContext(), page.citation!!)
-                    super.onAdDismissedFullScreenContent()
-                }
-                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                    super.onAdFailedToShowFullScreenContent(p0)
-                }
-                override fun onAdImpression() {
-                    super.onAdImpression()
-                }
-                override fun onAdShowedFullScreenContent() {
-                    super.onAdShowedFullScreenContent()
-                }
-            }
+    private fun showInter() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {}
             mInterstitialAd?.show(requireActivity())
         }
     }

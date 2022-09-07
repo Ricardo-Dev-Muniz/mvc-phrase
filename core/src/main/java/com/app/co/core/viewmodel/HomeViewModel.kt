@@ -33,24 +33,30 @@ class HomeViewModel(
     }
 
     private fun getPage() = viewModelScope.launch {
-       withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             repository.getPage()
         }.read({
-           _page.value = it
-       }, {
-            Log.e("home_view_model", "Error viewModel - ${it.message}")
+            _page.value = it
+        }, {
+            Log.e(
+                "home_view_model",
+                "Error viewModel - ${it.message}"
+            )
         })
     }
 
     fun setPosition(position: Int) {
         _position.value = position
     }
+
     fun getPageItem(position: Int): Page {
         return _page.value!![position]!!
     }
 
     override fun onReceiveResponse(code: Int, data: Any?) {
-        Log.d("home_view_model",
-            "OnReceiveResponse viewModel - code: $code ==> data: $data")
+        Log.d(
+            "home_view_model",
+            "OnReceiveResponse viewModel - code: $code ==> data: $data"
+        )
     }
 }

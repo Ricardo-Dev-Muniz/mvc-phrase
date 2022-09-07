@@ -1,3 +1,4 @@
 rootProject.name = "Frases do dia"
 include ':app'
 include ':core'
+include ':data'

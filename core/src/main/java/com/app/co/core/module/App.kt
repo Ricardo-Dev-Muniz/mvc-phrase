@@ -28,7 +28,8 @@ object App {
     private val service = module {
         single {
             ServiceGen(
-                url = "https://us-central1-crawler-apiv1.cloudfunctions.net/app/", headers = listOf(
+                url = "https://us-central1-crawler-apiv1.cloudfunctions.net/app/",
+                headers = listOf(
                     Pair("Content-Type", "application/json"),
                     Pair("Accept", "application/json"),
                     Pair("Connection", "close")
