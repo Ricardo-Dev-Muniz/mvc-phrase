@@ -1,4 +1,4 @@
-package com.app.co.core.call
+package com.app.co.core.repository
 
 import com.app.co.core.data.Page
 import retrofit2.Response
