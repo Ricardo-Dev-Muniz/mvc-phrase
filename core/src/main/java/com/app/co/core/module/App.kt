@@ -1,8 +1,8 @@
 package com.app.co.core.module
 
-import com.app.co.core.call.Service
 import com.app.co.core.repository.HomeRepository
 import com.app.co.core.repository.HomeRepositoryImpl
+import com.app.co.core.repository.Service
 import com.app.co.core.service.ServiceGen
 import com.app.co.core.viewmodel.HomeViewModel
 import org.koin.android.ext.koin.androidApplication

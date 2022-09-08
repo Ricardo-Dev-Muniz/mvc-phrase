@@ -11,6 +11,7 @@ import com.app.co.core.data.Page
 import com.app.co.core.module.App
 import com.app.co.core.module.Utils
 import com.app.co.core.support_ext.share
+import com.app.co.core.support_ext.toggle
 import com.app.co.core.viewmodel.HomeViewModel
 import com.app.co.mvc.databinding.FragmentHomeBinding
 import com.app.co.mvc.fragment_ext.destroy
@@ -47,7 +48,7 @@ class HomeFragment : Fragment(), AdapterCallbacks {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
             .apply { lifecycleOwner = viewLifecycleOwner }
         observer()
-        click()
+        view()
         inter()
         return binding.root
     }
@@ -58,16 +59,17 @@ class HomeFragment : Fragment(), AdapterCallbacks {
         }
     }
 
-    private fun click() {
+    private fun view() {
         binding.btnShare.setOnClickListener {
-            binding.tvShare.visibility = View.GONE
-            binding.progress.visibility = View.VISIBLE
+            binding.tvShare.toggle()
+            binding.progress.toggle()
 
             binding.progress.animate().alpha(0f)
-                .setDuration(3500).withEndAction {
-                    binding.progress.visibility = View.GONE
+                .setDuration(2000).withEndAction {
+                    binding.progress.toggle()
+                    binding.tvShare.toggle()
                     binding.progress.alpha = 1F
-                    binding.tvShare.visibility = View.VISIBLE
+
                     val page = viewModel.getPageItem(viewModel.position.value!!)
                     share(requireContext(), page.citation!!)
                     showInter()

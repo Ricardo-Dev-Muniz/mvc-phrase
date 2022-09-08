@@ -21,6 +21,10 @@ android {
         debug {
             manifestPlaceholders = [usesCleartextTraffic:"true"]
         }
+        debug {
+            buildConfigField "String", "BASE_URL", '"http"'
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

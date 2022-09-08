@@ -10,7 +10,9 @@ import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.View
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -106,3 +108,8 @@ fun Any.share(
     share.putExtra(Intent.EXTRA_STREAM, uri)
     context.startActivity(Intent.createChooser(share, "Compartilhar evento"))
 }
+
+fun View.toggle() = if(this.isVisible)
+    this.visibility = View.GONE
+else
+    this.visibility = View.VISIBLE
