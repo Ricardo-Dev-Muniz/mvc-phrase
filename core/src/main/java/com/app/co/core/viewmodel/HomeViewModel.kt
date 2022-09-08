@@ -39,8 +39,7 @@ class HomeViewModel(
             _page.value = it
         }, {
             Log.e(
-                "home_view_model",
-                "Error viewModel - ${it.message}"
+                "home_view_model", "Error VM - ${it.message}"
             )
         })
     }

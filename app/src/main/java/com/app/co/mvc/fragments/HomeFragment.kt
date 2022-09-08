@@ -47,7 +47,7 @@ class HomeFragment : Fragment(), AdapterCallbacks {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
             .apply { lifecycleOwner = viewLifecycleOwner }
         observer()
-        click()
+        view()
         inter()
         return binding.root
     }
@@ -58,7 +58,7 @@ class HomeFragment : Fragment(), AdapterCallbacks {
         }
     }
 
-    private fun click() {
+    private fun view() {
         binding.btnShare.setOnClickListener {
             binding.tvShare.visibility = View.GONE
             binding.progress.visibility = View.VISIBLE
@@ -66,8 +66,8 @@ class HomeFragment : Fragment(), AdapterCallbacks {
             binding.progress.animate().alpha(0f)
                 .setDuration(3500).withEndAction {
                     binding.progress.visibility = View.GONE
-                    binding.progress.alpha = 1F
                     binding.tvShare.visibility = View.VISIBLE
+                    binding.progress.alpha = 1F
                     val page = viewModel.getPageItem(viewModel.position.value!!)
                     share(requireContext(), page.citation!!)
                     showInter()
